@@ -33,7 +33,7 @@ func New() Database {
 
 }
 
-func (db *Database) QueryOne(database, collection, key, value string) bson.M {
+func (db *Database) QueryOne(database, collection, key, value string) interface{} {
 	coll := db.Client.Database(database).Collection(collection)
 	var result bson.M
 	err := coll.FindOne(context.TODO(), bson.D{{key, value}}).Decode(&result)

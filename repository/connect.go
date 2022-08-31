@@ -1,8 +1,5 @@
 package repository
 
 type Database interface {
-}
-
-func New() {
-
+	QueryOne(database, collection, key, value string) interface{}
 }

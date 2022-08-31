@@ -5,9 +5,10 @@ import (
 	"net/http"
 
 	"timbul.io/lib/mongodb"
+	"timbul.io/service/backend"
 )
 
-func GetMovie(w http.ResponseWriter, r *http.Request) {
+func GetMovie(env *backend.Service, w http.ResponseWriter, r *http.Request) {
 	db := mongodb.New()
 	result := db.QueryOne("sample_mflix", "movies", "title", "Back to the Future")
 	jsonData, err := json.MarshalIndent(result, "", "    ")

@@ -7,10 +7,15 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"timbul.io/controller"
+	"timbul.io/lib/mongodb"
+	"timbul.io/service/backend"
 )
 
 func CreateRoute() *chi.Mux {
 	r := chi.NewRouter()
+
+	db := mongodb.New()
+	env := backend.New(&db)
 
 	// A good base middleware stack
 	r.Use(middleware.RequestID)
@@ -28,7 +33,7 @@ func CreateRoute() *chi.Mux {
 	})
 
 	r.Route("/movies", func(r chi.Router) {
-		r.Get("/{movieId}", controller.GetMovie)
+		r.Get("/{movieId}", HandlerFuncWrapper(&env, controller.GetMovie))
 	})
 
 	return r
