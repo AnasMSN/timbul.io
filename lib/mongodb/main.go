@@ -35,11 +35,10 @@ func New() Database {
 
 func (db *Database) QueryOne(database, collection, key, value string) bson.M {
 	coll := db.Client.Database(database).Collection(collection)
-	title := "Back to the Future"
 	var result bson.M
 	err := coll.FindOne(context.TODO(), bson.D{{key, value}}).Decode(&result)
 	if err == mongo.ErrNoDocuments {
-		fmt.Printf("No document was found with the title %s\n", title)
+		fmt.Printf("No document was found with the title %s\n", key)
 		return nil
 	}
 

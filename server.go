@@ -1,20 +1,12 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
+	"net/http"
 
-	"timbul.io/lib/mongodb"
+	"timbul.io/routes"
 )
 
 func main() {
-
-	db := mongodb.New()
-
-	result := db.QueryOne("sample_mflix", "movies", "title", "Back to the Future")
-	jsonData, err := json.MarshalIndent(result, "", "    ")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("%s\n", jsonData)
+	routes := routes.CreateRoute()
+	http.ListenAndServe(":3000", routes)
 }
